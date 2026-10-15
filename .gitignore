@@ -1,0 +1,5 @@
+# Fetched by hooks/ios-fetch-llama-xcframework.js at plugin install (pinned tag
+# in that hook); not committed to keep the repo light.
+src/ios/llama.xcframework/
+src/ios/llama-xcframework.zip
+src/ios/llama-xcframework-tmp/

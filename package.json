@@ -1,0 +1,38 @@
+{
+  "name": "cordova-plugin-local-llm",
+  "version": "0.1.0",
+  "description": "On-device text generation (llama.cpp + Qwen GGUF) for offline inspection/audit summaries",
+  "cordova": {
+    "id": "cordova-plugin-local-llm",
+    "platforms": [
+      "android",
+      "ios"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Qarma-inspect/cordova-plugin-local-llm.git"
+  },
+  "keywords": [
+    "cordova",
+    "ecosystem:cordova",
+    "cordova-android",
+    "cordova-ios",
+    "llm",
+    "llama.cpp",
+    "qwen",
+    "offline",
+    "summarization"
+  ],
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "cordovaDependencies": {
+    "0.1.0": {
+      "cordova-android": ">=12.0.0",
+      "cordova-ios": ">=6.0.0"
+    }
+  },
+  "author": "Qarma",
+  "license": "MIT"
+}

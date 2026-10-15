@@ -1,0 +1,34 @@
+// Wires the plugin's native sources (copied into app/src/main/cpp by plugin.xml)
+// into the app module's externalNativeBuild. Requires the Android NDK and CMake
+// (install via SDK Manager); the first build fetches llama.cpp via CMake
+// FetchContent, so it needs network access once.
+android {
+    externalNativeBuild {
+        cmake {
+            path "src/main/cpp/CMakeLists.txt"
+            version "3.22.1"
+        }
+    }
+
+    defaultConfig {
+        externalNativeBuild {
+            cmake {
+                arguments "-DANDROID_STL=c++_shared",
+                          "-DCMAKE_BUILD_TYPE=Release"
+                // Update after validating a newer llama.cpp tag:
+                // arguments += "-DLLAMA_CPP_GIT_TAG=bXXXX"
+            }
+        }
+        ndk {
+            // llama.cpp is only practical on 64-bit ARM; 32-bit devices fall back
+            // to isSupported() === false in the app.
+            abiFilters "arm64-v8a"
+        }
+    }
+
+    packagingOptions {
+        jniLibs {
+            pickFirsts += ["**/libc++_shared.so"]
+        }
+    }
+}

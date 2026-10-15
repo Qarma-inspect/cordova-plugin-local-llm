@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        id="cordova-plugin-local-llm"
+        version="0.1.0">
+    <name>Local LLM</name>
+    <description>On-device text generation (llama.cpp + Qwen GGUF) for offline inspection/audit summaries</description>
+    <license>MIT</license>
+    <keywords>cordova,llm,llama.cpp,qwen,on-device,offline,summarization</keywords>
+    <repo>https://github.com/Qarma-inspect/cordova-plugin-local-llm</repo>
+
+    <js-module src="www/LocalLLM.js" name="LocalLLM">
+        <clobbers target="cordova.plugins.localLLM" />
+    </js-module>
+
+    <platform name="android">
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="LocalLLM">
+                <param name="android-package" value="com.qarma.localllm.LocalLLMPlugin" />
+            </feature>
+        </config-file>
+
+        <source-file src="src/android/LocalLLMPlugin.java" target-dir="src/com/qarma/localllm" />
+
+        <!-- Native sources are copied into the app module and built by the app's
+             externalNativeBuild (wired up by local-llm.gradle). llama.cpp itself is
+             fetched by CMake (FetchContent) at build time, pinned in CMakeLists.txt. -->
+        <resource-file src="src/android/jni/CMakeLists.txt" target="src/main/cpp/CMakeLists.txt" />
+        <resource-file src="src/android/jni/local_llm_jni.cpp" target="src/main/cpp/local_llm_jni.cpp" />
+
+        <framework src="src/android/local-llm.gradle" custom="true" type="gradleReference" />
+    </platform>
+
+    <platform name="ios">
+        <config-file target="config.xml" parent="/*">
+            <feature name="LocalLLM">
+                <param name="ios-package" value="LocalLLMPlugin" />
+            </feature>
+        </config-file>
+
+        <!-- Downloads a prebuilt llama.xcframework into src/ios/ if it is not
+             already present. See README for pinning / offline installs. -->
+        <hook type="before_plugin_install" src="hooks/ios-fetch-llama-xcframework.js" />
+
+        <source-file src="src/ios/LocalLLMPlugin.swift" />
+        <framework src="src/ios/llama.xcframework" custom="true" embed="true" />
+
+        <preference name="SWIFT_VERSION" value="5" />
+    </platform>
+</plugin>
