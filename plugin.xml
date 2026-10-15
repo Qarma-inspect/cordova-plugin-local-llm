@@ -25,8 +25,8 @@
         <!-- Native sources are copied into the app module and built by the app's
              externalNativeBuild (wired up by local-llm.gradle). llama.cpp itself is
              fetched by CMake (FetchContent) at build time, pinned in CMakeLists.txt. -->
-        <resource-file src="src/android/jni/CMakeLists.txt" target="src/main/cpp/CMakeLists.txt" />
-        <resource-file src="src/android/jni/local_llm_jni.cpp" target="src/main/cpp/local_llm_jni.cpp" />
+        <resource-file src="src/android/jni/CMakeLists.txt" target="cpp/CMakeLists.txt" />
+        <resource-file src="src/android/jni/local_llm_jni.cpp" target="cpp/local_llm_jni.cpp" />
 
         <framework src="src/android/local-llm.gradle" custom="true" type="gradleReference" />
     </platform>
@@ -45,6 +45,6 @@
         <source-file src="src/ios/LocalLLMPlugin.swift" />
         <framework src="src/ios/llama.xcframework" custom="true" embed="true" />
 
-        <preference name="SWIFT_VERSION" value="5" />
+        <preference name="SWIFT_VERSION" default="5.0" />
     </platform>
 </plugin>
